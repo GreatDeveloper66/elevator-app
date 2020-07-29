@@ -1,3 +1,11 @@
+## Introduction
+Welcome to the elevator app. This interactive web single page applicatons allows three users to move up and down an elevator. The elevator keeps track
+of which floors each user is on and where the elevator is moving and where the users want to go.
+
+The app is a single page frontend user interface using JavaScript with React for user interface and interactivity and Redux for state management.
+
+## Installation
+On your local machine move to the directory you would like to install the code, then git clone 
 This project was bootstrapped with [Create React App](https://github.com/facebook/create-react-app).
 
 ## Available Scripts
