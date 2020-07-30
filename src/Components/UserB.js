@@ -19,9 +19,10 @@ const mapStateToProps = state => {
   }
 }
 
-  function UserB() {
+  function UserB(props) {
     const [destinationFloor, setdestinationFloor ] = useState('')
     const handleChange = event => setdestinationFloor(event.target.value)
+    const handleSubmit = () => props.updateDestination(destinationFloor)
     
         return(
             <Fragment>
@@ -32,7 +33,7 @@ const mapStateToProps = state => {
                    </span> </p><input type="number" min="0" max="30"
                     value={destinationFloor} onChange={handleChange}>
                       </input> 
-                   <Button type='submit'>Press Button</Button>
+                   <Button type='submit' onClick={handleSubmit}>Press Button</Button>
                    </ListGroupItem>
             </Fragment>
         )
