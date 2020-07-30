@@ -27,11 +27,11 @@ const mapStateToProps = state => {
           return(
               <Fragment>
                  <ListGroupItem>
-                   <p class="small">
+                   <p className="small">
                      User A: Current: 
-                     <span class="text-primary">4</span> 
-                     | Destination: <span class="text-primary">6</span> | 
-                     <span class="text-primary">OFF
+                     <span className="text-primary">4</span> 
+                     | Destination: <span className="text-primary">6</span> | 
+                     <span className="text-primary">OFF
                      </span> </p><input type="number" min="0" max="30"></input> 
                      <Button type='submit'>Press Button</Button>
                     </ListGroupItem>
