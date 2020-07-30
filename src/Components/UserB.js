@@ -23,7 +23,7 @@ const mapStateToProps = state => {
     render(){
         return(
             <Fragment>
-                <ListGroupItem><p class="small">User B: Current: <span class="text-primary">4</span> | Destination: <span class="text-primary">6</span> | <span class="text-primary">OFF</span> </p><input type="number"></input> </ListGroupItem>
+                <ListGroupItem><p class="small">User B: Current: <span class="text-primary">4</span> | Destination: <span class="text-primary">6</span> | <span class="text-primary">OFF</span> </p><input type="number" min="0" max="30"></input> </ListGroupItem>
             </Fragment>
         )
     }
