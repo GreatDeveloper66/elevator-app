@@ -1,4 +1,4 @@
-import { combineReducers } from 'redux'
+import { combineReducers } from './node_modules/redux'
 import userAReducer from './userAReducer.js'
 import userBReducer from './userBReducer.js'
 import userCReducer from './userCReducer.js'
@@ -28,11 +28,11 @@ const defaultState = {
 }
 */
 
-const RootReducer = combineReducers({
+const rootReducer = combineReducers({
     elevator: elevatorReducer,
     userA: userAReducer,
     userB: userBReducer,
     userC: userCReducer
 })
 
-export default RootReducer
+export default rootReducer
