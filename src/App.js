@@ -1,5 +1,8 @@
 import React from 'react';
 import { Container, Row, Col, Card, ListGroup, ListGroupItem, Input } from 'react-bootstrap'
+import UserA from './Components/UserA'
+import UserB from './Components/UserB'
+import UserC from './Components/UserC'
 
 function App() {
   return (
@@ -13,12 +16,9 @@ function App() {
                     Currrent Floor: 1
                   </Card.Title>
                   <ListGroup className="list-group-flush">
-                    <ListGroupItem>User A: Floor 4 </ListGroupItem>
-                    <ListGroupItem><input type="number"></input></ListGroupItem>
-                    <ListGroupItem>User B: Floor 4</ListGroupItem>
-                    <ListGroupItem><input type="number"></input></ListGroupItem>
-                    <ListGroupItem>User C: Floor 6</ListGroupItem>
-                    <ListGroupItem><input type="number"></input></ListGroupItem>
+                    <UserA />
+                    <UserB />
+                    <UserC />
                   </ListGroup>
 
                 </Card.Body>
