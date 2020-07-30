@@ -23,9 +23,7 @@ const mapStateToProps = state => {
     render(){
         return(
             <Fragment>
-                <ListGroupItem>User A: Floor 4 </ListGroupItem>
-                <ListGroupItem>User A Destination: Floor 6</ListGroupItem>
-                <ListGroupItem><input type="number"></input></ListGroupItem>
+                <ListGroupItem>User B: Floor 4 | User B Destination: Floor 6 | <input type="number"></input> </ListGroupItem>
             </Fragment>
         )
     }
