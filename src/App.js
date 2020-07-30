@@ -18,22 +18,25 @@ function App() {
     <div className="App" style={bannerStyle()}>
       <Container>
         <Row d-flex="justify-content-center">
-          <Col xs={{span:10, offset:1}} sm={{span: 4, offset: 4}} md={{ span: 6, offset:3 }} d-flex="justify-content-center">
+          <Col xs={{span:10, offset:1}} sm={{span: 6, offset: 4}} md={{ span: 4, offset:3 }} d-flex="justify-content-center">
               <Card>
                 <Card.Body>
                   <Card.Title>
                     Currrent Floor: 1
                   </Card.Title>
-                  <ListGroup className="list-group-flush">
+                 
+
+                </Card.Body>
+                <Card.Img variant="bottom" src={require("./Images/elevator_wide.jpg")}>
+
+                </Card.Img>
+                <Card.Body>
+                <ListGroup className="list-group-flush">
                     <UserA />
                     <UserB />
                     <UserC />
                   </ListGroup>
-
                 </Card.Body>
-                <Card.Img variant="bottom" src={require("./Images/elevator_medium.jpg")}>
-
-                </Card.Img>
               </Card>
           </Col>
 
