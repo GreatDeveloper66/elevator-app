@@ -1,4 +1,4 @@
-import { combineReducers } from './node_modules/redux'
+import { combineReducers } from 'redux'
 import userAReducer from './userAReducer.js'
 import userBReducer from './userBReducer.js'
 import userCReducer from './userCReducer.js'
