@@ -1,4 +1,4 @@
-import React, { Component, Fragment } from 'react'
+import React, { Fragment } from 'react'
 import { connect } from 'react-redux'
 import { ListGroupItem, Button } from 'react-bootstrap'
 import UpdateUserADestination from '../Actions/UpdateUserADestination'
@@ -22,8 +22,8 @@ const mapStateToProps = state => {
 }
 
 
-  class userA extends Component {
-      render(){
+  function userA() {
+      
           return(
               <Fragment>
                  <ListGroupItem>
@@ -37,7 +37,7 @@ const mapStateToProps = state => {
                     </ListGroupItem>
               </Fragment>
           )
-      }
+      
   }
 
 

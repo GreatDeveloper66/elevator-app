@@ -19,8 +19,8 @@ const mapStateToProps = state => {
   }
 }
 
-  class userB extends Component {
-    render(){
+  function userB() {
+    
         return(
             <Fragment>
                 <ListGroupItem>
@@ -32,7 +32,7 @@ const mapStateToProps = state => {
                    </ListGroupItem>
             </Fragment>
         )
-    }
+    
 }
 
 

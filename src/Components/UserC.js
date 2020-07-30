@@ -21,8 +21,7 @@ const mapStateToProps = state => {
   }
 }
 
-  class userC extends Component {
-    render(){
+  function userC() {
         return(
             <Fragment>
                 <ListGroupItem>
@@ -34,7 +33,7 @@ const mapStateToProps = state => {
                   </ListGroupItem>
             </Fragment>
         )
-    }
+    
 }
 
 export default connect(mapStateToProps,mapDispatchToProps)(userC)
