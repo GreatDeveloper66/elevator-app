@@ -28,11 +28,11 @@ const defaultState = {
 }
 */
 
-const rootReducer = combineReducers({
+const RootReducer = combineReducers({
     elevator: elevatorReducer,
     userA: userAReducer,
     userB: userBReducer,
     userC: userCReducer
 })
 
-export default rootReducer
+export default RootReducer
