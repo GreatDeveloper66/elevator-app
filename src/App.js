@@ -31,7 +31,7 @@ function App() {
                   </ListGroup>
 
                 </Card.Body>
-                <Card.Img variant="bottom" src="#">
+                <Card.Img variant="bottom" src={require("./Images/elevator_medium.jpg")}>
 
                 </Card.Img>
               </Card>
