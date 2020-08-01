@@ -3,6 +3,8 @@ import { Container, Row, Col, Card, ListGroup, ListGroupItem, Input } from 'reac
 import UserA from './Components/UserA'
 import UserB from './Components/UserB'
 import UserC from './Components/UserC'
+import { connect } from 'react-redux'
+
 const mapStateToProps = state => {
   return {
     elevator: state.elevator
@@ -17,7 +19,7 @@ const bannerStyle = () => ({
   width: '100vw',
   overflowY: 'hidden'
 })
-function App() {
+function App(props) {
   return (
     <div className="App" style={bannerStyle()}>
       <Container>
@@ -26,7 +28,7 @@ function App() {
               <Card>
                 <Card.Body>
                   <Card.Title>
-                    Currrent Floor: 1
+                    Currrent Floor: {props.elevator.Floor} {props.elevator.Direction}
                   </Card.Title>
                  
 
@@ -52,4 +54,4 @@ function App() {
   );
 }
 
-export default App;
+export default connect(mapStateToProps,null)(App)
