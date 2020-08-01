@@ -2,6 +2,7 @@ import React, { useState , Fragment } from 'react'
 import { connect } from 'react-redux'
 import { ListGroupItem, Button } from 'react-bootstrap'
 import UpdateUserCDestination from '../Actions/UpdateUserCDestination'
+import { propTypes } from 'react-bootstrap/esm/Image'
 
 
 const mapStateToProps = state => {
@@ -20,16 +21,16 @@ const mapStateToProps = state => {
   }
 }
 
-  function UserC() {
+  function UserC(props) {
 
     const [destinationFloor, setdestinationFloor ] = useState('')
     const handleChange = event => setdestinationFloor(event.target.value)
         return(
             <Fragment>
                 <ListGroupItem>
-                  <p className="small">User C: Current: <span className="text-primary">4</span> 
-                  | Destination: <span className="text-primary">6</span> 
-                  | <span className="text-primary">OFF
+                  <p className="small">User C: Current: <span className="text-primary">{props.userC.Floor}</span> 
+                  | Destination: <span className="text-primary">{props.userC.Destination}</span> 
+                  | <span className="text-primary">{props.userC.Status}
                   </span> </p><input type="number" min="0" max="30"
                    value={destinationFloor} onChange={handleChange}>
                      </input> 
