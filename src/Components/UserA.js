@@ -8,9 +8,8 @@ import UpdateUserADestination from '../Actions/UpdateUserADestination'
 
 
 const mapStateToProps = state => {
-    return {
-      userAFloor: state.userAFloor,
-      userADestination: state.userADestination
+    return{
+      userA: state.userA
     }
   }
   
