@@ -26,9 +26,9 @@ const mapStateToProps = state => {
         return(
             <Fragment>
                 <ListGroupItem>
-                  <p className="small">User B: Current: <span className="text-primary">4</span>
-                   | Destination: <span className="text-primary">6</span> | 
-                   <span className="text-primary">OFF
+                  <p className="small">User B: Current: <span className="text-primary">{props.userB.Floor}</span>
+                   | Destination: <span className="text-primary">{props.userB.Destination}</span> | 
+                   <span className="text-primary">{props.userB.Status}
                    </span> </p><input type="number" min="0" max="30"
                     value={destinationFloor} onChange={handleChange}>
                       </input> 
