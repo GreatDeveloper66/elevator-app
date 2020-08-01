@@ -23,7 +23,7 @@ const mapStateToProps = state => {
 }
 
 
-  function UserA() {
+  function UserA(props) {
       
 
     const [destinationFloor, setdestinationFloor ] = useState('')
@@ -36,9 +36,9 @@ const mapStateToProps = state => {
                  <ListGroupItem>
                    <p className="small">
                      User A: Current: 
-                     <span className="text-primary">4</span> 
-                     | Destination: <span className="text-primary">6</span> | 
-                     <span className="text-primary">OFF
+          <span className="text-primary">{props.userA.Floor}</span> 
+                     | Destination: <span className="text-primary">{props.userA.Destination}</span> | 
+                     <span className="text-primary">{props.userA.Status}
                      </span> </p><input type="number" min="0" max="30" 
                       value={destinationFloor} onChange={handleChange}></input> 
                      <Button type='submit'>Press Button</Button>
