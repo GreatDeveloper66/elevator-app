@@ -6,8 +6,7 @@ import UpdateUserCDestination from '../Actions/UpdateUserCDestination'
 
 const mapStateToProps = state => {
     return {
-      userCFloor: state.userCFloor,
-      userCDestination: state.userCDestination
+      userC: state.userC
     }
   }
 
