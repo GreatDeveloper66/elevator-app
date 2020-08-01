@@ -3,7 +3,11 @@ import { Container, Row, Col, Card, ListGroup, ListGroupItem, Input } from 'reac
 import UserA from './Components/UserA'
 import UserB from './Components/UserB'
 import UserC from './Components/UserC'
-
+const mapStateToProps = state => {
+  return {
+    elevator: state.elevator
+  }
+}
 const bannerStyle = () => ({
   backgroundImage: `url(${require(`./Images/city_skyscraper.jpg`)})`,
   backgroundPosition: 'center',
