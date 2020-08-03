@@ -21,7 +21,7 @@ const mapDispatchToProps = dispatch => {
 }
 
 const moveElevator = () => {
-  
+
 }
 const bannerStyle = () => ({
   backgroundImage: `url(${require(`./Images/city_skyscraper.jpg`)})`,
@@ -43,7 +43,7 @@ function App(props) {
               <Card>
                 <Card.Body>
                   <Card.Title>
-                    Currrent Floor: {props.elevator.Floor} {props.elevator.Direction}
+                    Currrent Floor: {props.elevator.floor} {props.elevator.direction}
                   </Card.Title>
                  
 
