@@ -17,6 +17,7 @@ const mapStateToProps = state => {
   const mapDispatchToProps = dispatch => {
     return {
       updateDestination: (newfloor) => {
+        console.log('in redux', newfloor)
         dispatch(UpdateUserADestination(newfloor))
       }
   }
@@ -28,6 +29,10 @@ const mapStateToProps = state => {
 
     const [destinationFloor, setdestinationFloor ] = useState('')
     const handleChange = event => setdestinationFloor(event.target.value)
+    const handleSubmit = () => {
+      console.log(destinationFloor)
+      props.updateDestination(destinationFloor)
+    }
     
     
 
@@ -41,7 +46,7 @@ const mapStateToProps = state => {
                      <span className="text-primary">{props.userA.Status}
                      </span> </p><input type="number" min="0" max="30" 
                       value={destinationFloor} onChange={handleChange}></input> 
-                     <Button type='submit'>Press Button</Button>
+                     <Button type='submit' onClick={handleSubmit}>Press Button</Button>
                     </ListGroupItem>
               </Fragment>
           )
