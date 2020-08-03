@@ -3,12 +3,25 @@ import { Container, Row, Col, Card, ListGroup, ListGroupItem, Input } from 'reac
 import UserA from './Components/UserA'
 import UserB from './Components/UserB'
 import UserC from './Components/UserC'
+import MoveElevatorFloor from './Actions/MoveElevatorFloor'
 import { connect } from 'react-redux'
 
 const mapStateToProps = state => {
   return {
     elevator: state.elevator
   }
+}
+
+const mapDispatchToProps = dispatch => {
+  return {
+    moveFloor: () => {
+      dispatch(MoveElevatorFloor())
+    }
+}
+}
+
+const moveElevator = () => {
+  
 }
 const bannerStyle = () => ({
   backgroundImage: `url(${require(`./Images/city_skyscraper.jpg`)})`,
@@ -19,6 +32,8 @@ const bannerStyle = () => ({
   width: '100vw',
   overflowY: 'hidden'
 })
+
+
 function App(props) {
   return (
     <div className="App" style={bannerStyle()}>
@@ -54,4 +69,4 @@ function App(props) {
   );
 }
 
-export default connect(mapStateToProps,null)(App)
+export default connect(mapStateToProps,mapDispatchToProps)(App)
