@@ -41,7 +41,7 @@ const mapStateToProps = state => {
                      User A: Current: 
           <span className="text-primary">{props.userA.floor}</span> 
                      | Destination: <span className="text-primary">{props.userA.destination}</span> | 
-                     <span className="text-primary">{props.userA.Status}
+                     <span className="text-primary">{props.userA.status}
                      </span> </p><input type="number" min="0" max="30" 
                       value={destinationFloor} onChange={handleChange}></input> 
                      <Button type='submit' onClick={handleSubmit}>Press Button</Button>
