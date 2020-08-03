@@ -17,7 +17,6 @@ const mapStateToProps = state => {
   const mapDispatchToProps = dispatch => {
     return {
       updateDestination: (newfloor) => {
-        console.log('in redux', newfloor)
         dispatch(UpdateUserADestination(newfloor))
       }
   }
@@ -30,7 +29,6 @@ const mapStateToProps = state => {
     const [destinationFloor, setdestinationFloor ] = useState('')
     const handleChange = event => setdestinationFloor(event.target.value)
     const handleSubmit = () => {
-      console.log(destinationFloor)
       props.updateDestination(destinationFloor)
     }
     

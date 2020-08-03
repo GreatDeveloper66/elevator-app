@@ -21,7 +21,9 @@ const mapStateToProps = state => {
   function UserB(props) {
     const [destinationFloor, setdestinationFloor ] = useState('')
     const handleChange = event => setdestinationFloor(event.target.value)
-    const handleSubmit = () => props.updateDestination(destinationFloor)
+    const handleSubmit = () => {
+      props.updateDestination(destinationFloor)
+    }
     
         return(
             <Fragment>
