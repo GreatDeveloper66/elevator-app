@@ -5,7 +5,18 @@ of which floors each user is on and where the elevator is moving and where the u
 The app is a single page frontend user interface using JavaScript with React for user interface and interactivity and Redux for state management.
 
 ## Installation
-On your local machine move to the directory you would like to install the code, then git clone 
+On your local machine move to the directory you would like to install the code, then run 'git clone git@github.com:GreatDeveloper66/elevator-app.git'
+
+### Install dependencies
+To install all necessary dependencies -> type 'cd elevator-app', then 'npm install' in 
+command line
+
+### Run
+To launch app -> run 'npm start' in project directory 
+App will open at 'http://localhost:3000'
+visit 'http://localhost:3000' in your broswer or 
+visit heroku deployed app at https://serene-garden-70169.herokuapp.com/
+
 This project was bootstrapped with [Create React App](https://github.com/facebook/create-react-app).
 
 ## Available Scripts
