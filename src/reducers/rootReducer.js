@@ -2,7 +2,7 @@ const defaultState = {
     elevator: {
         floor: 6,
         direction: 'N',
-        destination: null
+        destination: false
     },
     userA: {
         floor: 1,
@@ -52,23 +52,28 @@ const rootReducer = (state = defaultState, action) => {
         AFloor = Aonelevator ? elevatorFloor : AFloor
         BFloor = Bonelevator ? elevatorFloor : BFloor
         CFloor = Conelevator ? elevatorFloor : CFloor
-        
+        newfloor = elevatorDirection === "U" ? elevatorFloor + 1 : elevatorDirection === "D" ? elevatorFloor - 1 : elevatorFloor
 
         if(!Aonelevator && Awaiting) {
                 if(AFloor !== elevatorFloor){
                     return {...state,
-                            elevator: {...state.elevator, destination: AFloor, direction: newDirection }}
+                            elevator: {floor: newfloor, direction: newDirection, destination: AFloor }}
                 }
                 return {...state, 
                     userA: {...state.userA, onelevator: true, floor: elevatorFloor },
                     elevator: {...state.elevator, destination: ADestination}}
         }
-        if(Aonelevator && Awaiting && elevatorFloor === elevatorDestination){
-            return {...state,
+        if(Aonelevator && Awaiting) { 
+                if(elevatorFloor === elevatorDestination){
+                return {...state,
                     userA: {...state.userA, onelevator: false, waiting: false},
-                    elevator: {...state.elevator, destination: null}}
+                    elevator: {...state.elevator, destination: false}}
+            }
+            return {...state, 
+                    elevator: {...state.elevator, direction: newDirection, floor: newfloor },
+                    userA: {...state.userA, floor: elevatorFloor }}
         }
-        return state
+        return {...state, elevator: {...state.elevator, direction: newDirection, floor: newfloor}}
     
 
     case 'UpdateUserADestination':
