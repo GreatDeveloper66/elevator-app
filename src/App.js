@@ -1,5 +1,5 @@
-import React from 'react';
-import { Container, Row, Col, Card, ListGroup, ListGroupItem, Input } from 'react-bootstrap'
+import React, { useEffect } from 'react';
+import { Container, Row, Col, Card, ListGroup } from 'react-bootstrap'
 import UserA from './Components/UserA'
 import UserB from './Components/UserB'
 import UserC from './Components/UserC'
@@ -20,9 +20,8 @@ const mapDispatchToProps = dispatch => {
 }
 }
 
-const moveElevator = () => {
 
-}
+
 const bannerStyle = () => ({
   backgroundImage: `url(${require(`./Images/city_skyscraper.jpg`)})`,
   backgroundPosition: 'center',
@@ -35,6 +34,13 @@ const bannerStyle = () => ({
 
 
 function App(props) {
+  useEffect(() => {
+    const interval = setInterval(() =>{
+      console.log('This will run every second')
+      props.moveFloor()
+    }, 1000)
+    return () => clearInterval(interval)
+  }, [])
   return (
     <div className="App" style={bannerStyle()}>
       <Container>

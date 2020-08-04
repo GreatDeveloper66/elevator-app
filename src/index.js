@@ -6,7 +6,7 @@ import * as serviceWorker from './serviceWorker';
 import 'bootstrap/dist/css/bootstrap.css';
 import { Provider } from 'react-redux'
 import rootReducer from './reducers/rootReducer'
-import { createStore, compose, applyMiddleware } from 'redux'
+import { createStore  } from 'redux'
 const store = createStore(rootReducer, window.__REDUX_DEVTOOLS_EXTENSION__ && window.__REDUX_DEVTOOLS_EXTENSION__())
 
 ReactDOM.render(
