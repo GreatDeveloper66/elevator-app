@@ -27,10 +27,10 @@ const defaultState = {
 }
 
 const rootReducer = (state = defaultState, action) => {
-    let { elevatorFloor, elevatorDirection, elevatorDestination } = state.elevator
-    let { AFloor, ADestination, Aonelevator, Awaiting } = state.userA
-    let { BFloor, BDestination, Bonelevator, Bwaiting } = state.userB
-    let { CFloor, CDestination, Conelevator, Cwaiting } = state.userC
+    let { floor: elevatorFloor, direction: elevatorDirection, destination: elevatorDestination } = state.elevator
+    let { floor: AFloor, destination: ADestination, onelevator: Aonelevator, waiting: Awaiting } = state.userA
+    let { floor: BFloor, destination: BDestination, onelevator: Bonelevator, waiting: Bwaiting } = state.userB
+    let { floor: CFloor, destination: CDestination, onelevator: Conelevator, waiting: Cwaiting } = state.userC
     let newfloor
     
     /*
@@ -52,12 +52,12 @@ const rootReducer = (state = defaultState, action) => {
         AFloor = Aonelevator ? elevatorFloor : AFloor
         BFloor = Bonelevator ? elevatorFloor : BFloor
         CFloor = Conelevator ? elevatorFloor : CFloor
+        
 
-
-        if(!Aonelevator &&  Awaiting) {
+        if(!Aonelevator && Awaiting) {
                 if(AFloor !== elevatorFloor){
                     return {...state,
-                            elevator: {...state.elevator, destination: AFloor }}
+                            elevator: {...state.elevator, destination: AFloor, direction: newDirection }}
                 }
                 return {...state, 
                     userA: {...state.userA, onelevator: true, floor: elevatorFloor },
@@ -68,7 +68,7 @@ const rootReducer = (state = defaultState, action) => {
                     userA: {...state.userA, onelevator: false, waiting: false},
                     elevator: {...state.elevator, destination: null}}
         }
-        
+        return state
     
 
     case 'UpdateUserADestination':
