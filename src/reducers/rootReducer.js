@@ -26,29 +26,43 @@ const defaultState = {
 }
 
 const rootReducer = (state = defaultState, action) => {
-
+    let [ Efloor, Afloor, AStatus, ADestination, Bfloor, BStatus, BDestination, Cfloor, CStatus, CDestination, direction, Nfloor ] = 
+        [ state.elevator.floor, state.userA.floor, state.userA.status, state.userA.destination,
+      state.userB.floor, state.userB.status, state.userB.destination, state.userC.floor,
+      state.userC.status, state.userC.destination, state.elevator.direction, state.elevator.floor ];
 
     switch(action.type) {
+    case 'MoveElevatorFloor':
+        Nfloor = direction === "U" ? Efloor + 1 : direction === "D" ? Efloor - 1: Efloor
+        if(AStatus === "ON"){
+            Afloor = Nfloor
+        }
+        if(BStatus === "ON"){
+            Bfloor = Nfloor
+        }
+        if(CStatus === "ON"){
+            Cfloor = Nfloor
+        }
+    return {...state}
     case 'UpdateUserADestination':
-        const AStatus = state.userA.floor === state.elevator.floor ? "ON": "OFF"
-        const levA = state.elevator.floor - state.userA.destination
-        console.log(levA)
+        AStatus = Afloor === Efloor ? "ON": "OFF"
+        const levA = Efloor - ADestination
         const dirA = levA > 0 ? "D" : levA < 0 ? "U" : "N"
         return { ...state, 
                 userA: {...state.userA, destination: action.newfloor, 
                         status: AStatus,place: 'AW'}, 
                 elevator: {...state.elevator, direction: dirA} }
     case 'UpdateUserBDestination':
-        const BStatus = state.userB.floor === state.elevator.floor ? "ON": "OFF"
-        const levB = state.elevator.floor - state.userB.destination
+        BStatus = Bfloor === Efloor ? "ON": "OFF"
+        const levB = Efloor - BDestination
         const dirB = levB > 0 ? "D" : levB < 0 ? "U" : "N"
         return { ...state, 
                 userB: {...state.userB, destination: action.newfloor,
                 status: BStatus, place: 'AW'}, 
                 elevator: {...state.elevator, direction: dirB} }
     case 'UpdateUserCDestination':
-        const CStatus = state.userB.floor === state.elevator.floor ? "ON": "OFF"
-        const levC = state.elevator.floor - state.userC.destination
+        CStatus = Cfloor === Efloor ? "ON": "OFF"
+        const levC = Efloor - CDestination
         const dirC = levC > 0 ? "D" : levC < 0 ? "U" : "N"
         return { ...state, 
                 userC: {...state.userC, destination: action.newfloor,
