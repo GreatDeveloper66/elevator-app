@@ -22,7 +22,8 @@ const defaultState = {
         destination: '',
         onelevator: false,
         waiting: false
-    }
+    },
+    serviceQueue: []
     
 }
 
@@ -44,9 +45,11 @@ const rootReducer = (state = defaultState, action) => {
             */
     switch(action.type) {
     case 'MoveElevatorFloor':
-        //case1: userA is getting on elevator to got to destination
-        //case2: userA is getting off elevator after arriviing at destination
-        //case3: userA is going nowhere
+        //use a queue to determine which user to service next
+
+        let queue = []
+
+        
         const gap = elevatorDestination ? elevatorDestination - elevatorFloor : 0
         const newDirection = gap > 0 ? "U" : gap < 0 ? "D" : "N"
         AFloor = Aonelevator ? elevatorFloor : AFloor
@@ -78,45 +81,16 @@ const rootReducer = (state = defaultState, action) => {
 
     case 'UpdateUserADestination':
         newfloor = parseInt(action.newfloor)
-        return {...state, userA: {...state.userA, destination: newfloor,waiting: true}}
-
-        /*
-        if(AStatus === "OFF"){
-            //new elevator destination equals wherever 
-        }
-        
-        AStatus = Afloor === Efloor ? "ON": "OFF"
-        const levA = Efloor - newfloor
-        const dirA = levA > 0 ? "D" : levA < 0 ? "U" : "N"
-        return { ...state, 
-                userA: {...state.userA, destination: newfloor, 
-                        status: AStatus,place: 'AW'}, 
-                elevator: {...state.elevator, direction: dirA} }
-                */
+        return {...state, userA: {...state.userA, destination: newfloor,waiting: true}, 
+               serviceQueue: state.serviceQueue.unshift('userA')}
     case 'UpdateUserBDestination':
         newfloor = parseInt(action.newfloor)
-        return {...state, userB: {...state.userB, destination: newfloor,waiting: true }}
-        /*
-        BStatus = Bfloor === Efloor ? "ON": "OFF"
-        const levB = Efloor - newfloor
-        const dirB = levB > 0 ? "D" : levB < 0 ? "U" : "N"
-        return { ...state, 
-                userB: {...state.userB, destination: newfloor,
-                status: BStatus, place: 'AW'}, 
-                elevator: {...state.elevator, direction: dirB} }
-                */
+        return {...state, userB: {...state.userB, destination: newfloor,waiting: true },
+                serviceQueue: state.serviceQueue.unshift('userB')}
     case 'UpdateUserCDestination':
         newfloor = parseInt(action.newfloor)
-        return {...state, userC: {...state.userC, destination: newfloor,waiting: true }}
-        /*
-        CStatus = Cfloor === Efloor ? "ON": "OFF"
-        const levC = Efloor - newfloor
-        const dirC = levC > 0 ? "D" : levC < 0 ? "U" : "N"
-        return { ...state, 
-                userC: {...state.userC, destination: newfloor,
-                status: CStatus, place: 'AW'}, 
-                elevator: {...state.elevator, direction: dirC} }
-                */
+        return {...state, userC: {...state.userC, destination: newfloor,waiting: true },
+                serviceQueue: state.serviceQueue.unshift('userC')}
       default:
         return state
     }
