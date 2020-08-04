@@ -43,7 +43,9 @@ const rootReducer = (state = defaultState, action) => {
         if(CStatus === "ON"){
             Cfloor = Nfloor
         }
-    return {...state}
+    return { elevator: {...state.elevator, floor: Nfloor}, userA: {...state.userA, floor: Nfloor},
+            userB: {...state.userB, floor: Nfloor},userC: {...state.userC,floor: Nfloor}}
+            
     case 'UpdateUserADestination':
         AStatus = Afloor === Efloor ? "ON": "OFF"
         const levA = Efloor - ADestination
