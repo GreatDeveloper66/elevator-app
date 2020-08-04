@@ -52,7 +52,7 @@ const rootReducer = (state = defaultState, action) => {
         AFloor = Aonelevator ? elevatorFloor : AFloor
         BFloor = Bonelevator ? elevatorFloor : BFloor
         CFloor = Conelevator ? elevatorFloor : CFloor
-        newfloor = elevatorDirection === "U" ? elevatorFloor + 1 : elevatorDirection === "D" ? elevatorFloor - 1 : elevatorFloor
+        newfloor = gap > 0 ? elevatorFloor + 1 : gap < 0 ? elevatorFloor - 1 : elevatorFloor
 
         if(!Aonelevator && Awaiting) {
                 if(AFloor !== elevatorFloor){
@@ -66,12 +66,12 @@ const rootReducer = (state = defaultState, action) => {
         if(Aonelevator && Awaiting) { 
                 if(elevatorFloor === elevatorDestination){
                 return {...state,
-                    userA: {...state.userA, onelevator: false, waiting: false},
+                    userA: {...state.userA, onelevator: false, waiting: false, destination: ''},
                     elevator: {...state.elevator, destination: false}}
             }
             return {...state, 
                     elevator: {...state.elevator, direction: newDirection, floor: newfloor },
-                    userA: {...state.userA, floor: elevatorFloor }}
+                    userA: {...state.userA, floor: newfloor }}
         }
         return {...state, elevator: {...state.elevator, direction: newDirection, floor: newfloor}}
     
