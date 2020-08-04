@@ -31,6 +31,7 @@ const rootReducer = (state = defaultState, action) => {
     let { AFloor, ADestination, Aonelevator, Awaiting } = state.userA
     let { BFloor, BDestination, Bonelevator, Bwaiting } = state.userB
     let { CFloor, CDestination, Conelevator, Cwaiting } = state.userC
+    let newfloor
     
     /*
     let [ Efloor, Afloor, AStatus, ADestination, 
@@ -48,15 +49,15 @@ const rootReducer = (state = defaultState, action) => {
         //case3: userA is going nowhere
         const gap = elevatorDestination ? elevatorDestination - elevatorFloor : 0
         const newDirection = gap > 0 ? "U" : gap < 0 ? "D" : "N"
-        Afloor = Aonelevator ? elevatorFloor : Afloor
-        Bfloor = Bonelevator ? elevatorFloor : Bfloor
-        Cfloor = Conelevator ? elevatorFloor : Cfloor
+        AFloor = Aonelevator ? elevatorFloor : AFloor
+        BFloor = Bonelevator ? elevatorFloor : BFloor
+        CFloor = Conelevator ? elevatorFloor : CFloor
 
 
         if(!Aonelevator &&  Awaiting) {
-                if(Afloor !== elevatorFloor){
+                if(AFloor !== elevatorFloor){
                     return {...state,
-                            elevator: {...state.elevator, destination: Afloor }}
+                            elevator: {...state.elevator, destination: AFloor }}
                 }
                 return {...state, 
                     userA: {...state.userA, onelevator: true, floor: elevatorFloor },
