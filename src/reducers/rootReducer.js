@@ -1,3 +1,5 @@
+import { Howl, Howler } from 'howler'
+
 const defaultState = {
     elevator: {
         floor: 6,
@@ -26,6 +28,7 @@ const defaultState = {
     serviceQueue: []
     
 }
+
 
 const rootReducer = (state = defaultState, action) => {
     let { floor: elevatorFloor, direction: elevatorDirection, destination: elevatorDestination } = state.elevator
