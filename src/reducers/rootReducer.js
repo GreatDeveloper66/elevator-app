@@ -29,6 +29,15 @@ const defaultState = {
     
 }
 
+let bellSound = new Howl({
+    src: '../Sounds/elevator_bell.mp3'
+})
+
+let rideSound = new Howl({
+    src: '../Sounds/elevator_ride.mp3'
+})
+
+
 
 const rootReducer = (state = defaultState, action) => {
     let { floor: elevatorFloor, direction: elevatorDirection, destination: elevatorDestination } = state.elevator
@@ -36,23 +45,11 @@ const rootReducer = (state = defaultState, action) => {
     let { floor: BFloor, destination: BDestination, onelevator: Bonelevator, waiting: Bwaiting } = state.userB
     let { floor: CFloor, destination: CDestination, onelevator: Conelevator, waiting: Cwaiting } = state.userC
     let newfloor
-    
-    /*
-    let [ Efloor, Afloor, AStatus, ADestination, 
-        APlace, Bfloor, BStatus, BDestination, 
-        Cfloor, CStatus, CDestination, direction, 
-        Nfloor, newfloor, EDestination ] = 
-        [ state.elevator.floor, state.userA.floor, state.userA.status, state.userA.destination,state.userA.place,
-      state.userB.floor, state.userB.status, state.userB.destination, state.userC.floor,
-      state.userC.status, state.userC.destination, state.elevator.direction, state.elevator.floor, null, state.elevator.destination ];
-            */
+
     switch(action.type) {
     case 'MoveElevatorFloor':
         //use a queue to determine which user to service next
 
-        let queue = []
-
-        
         const gap = elevatorDestination ? elevatorDestination - elevatorFloor : 0
         const newDirection = gap > 0 ? "U" : gap < 0 ? "D" : "N"
         AFloor = Aonelevator ? elevatorFloor : AFloor
