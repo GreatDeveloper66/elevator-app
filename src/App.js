@@ -66,7 +66,7 @@ function App(props) {
                     <UserC />
                   </ListGroup>
                   <Card.Text>
-                  <h2 className="text-danger">{props.message}</h2>
+                  <h4 className="text-danger">{props.message}</h4>
                   </Card.Text>
                 </Card.Body>
                 
