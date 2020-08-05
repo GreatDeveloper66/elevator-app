@@ -26,7 +26,8 @@ const defaultState = {
         waiting: false
     },
     serviceQueue: [],
-    currentUser: false
+    currentUser: false,
+    message: "Welcome to the Elevator App. Pick a floor"
     
 }
 
@@ -75,7 +76,8 @@ const rootReducer = (state = defaultState, action) => {
                 return {...state, 
                     userA: {...state.userA, onelevator: true, floor: elevatorFloor },
                     elevator: {...state.elevator, destination: ADestination},
-                    currentUser: user, serviceQueue: queue }
+                    currentUser: user, serviceQueue: queue,
+                    message: `User A is boarding the elevator at floor ${elevatorFloor}` }
         }
         if(Aonelevator && Awaiting) { 
                 if(elevatorFloor === elevatorDestination){
@@ -83,7 +85,8 @@ const rootReducer = (state = defaultState, action) => {
                 return {...state,
                     userA: {...state.userA, onelevator: false, waiting: false, destination: ''},
                     elevator: {...state.elevator, destination: false},
-                    currentUser: false, serviceQueue: queue }
+                    currentUser: false, serviceQueue: queue,
+                    message: `User A has reached the destinaton floor ${elevatorFloor}` }
             }
             return {...state, 
                     elevator: {...state.elevator, direction: newDirection, floor: newfloor },
@@ -102,7 +105,8 @@ const rootReducer = (state = defaultState, action) => {
                 return {...state, 
                     userB: {...state.userB, onelevator: true, floor: elevatorFloor },
                     elevator: {...state.elevator, destination: BDestination},
-                    currentUser: user, serviceQueue: queue }
+                    currentUser: user, serviceQueue: queue,
+                    message: `User B is boarding the elevator at floor ${elevatorFloor}` }
         }
         if(Bonelevator && Bwaiting) { 
                 if(elevatorFloor === elevatorDestination){
@@ -110,7 +114,8 @@ const rootReducer = (state = defaultState, action) => {
                 return {...state,
                     userB: {...state.userB, onelevator: false, waiting: false, destination: ''},
                     elevator: {...state.elevator, destination: false},
-                    currentUser: false, serviceQueue: queue }
+                    currentUser: false, serviceQueue: queue,
+                    message: `User B reached the destination floor ${elevatorFloor}` }
             }
             return {...state, 
                     elevator: {...state.elevator, direction: newDirection, floor: newfloor },
@@ -129,7 +134,8 @@ const rootReducer = (state = defaultState, action) => {
                 return {...state, 
                     userC: {...state.userC, onelevator: true, floor: elevatorFloor },
                     elevator: {...state.elevator, destination: CDestination},
-                    currentUser: user, serviceQueue: queue }
+                    currentUser: user, serviceQueue: queue,
+                    message: `User C is boarding the elevator at floor ${elevatorFloor}` }
         }
         if(Conelevator && Cwaiting) { 
                 if(elevatorFloor === elevatorDestination){
@@ -137,7 +143,8 @@ const rootReducer = (state = defaultState, action) => {
                 return {...state,
                     userC: {...state.userC, onelevator: false, waiting: false, destination: ''},
                     elevator: {...state.elevator, destination: false},
-                    currentUser: false, serviceQueue: queue }
+                    currentUser: false, serviceQueue: queue,
+                    message: `User C has reached the destination ${elevatorFloor}` }
             }
             return {...state, 
                     elevator: {...state.elevator, direction: newDirection, floor: newfloor },
