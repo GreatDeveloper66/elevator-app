@@ -8,7 +8,8 @@ import { connect } from 'react-redux'
 
 const mapStateToProps = state => {
   return {
-    elevator: state.elevator
+    elevator: state.elevator,
+    message: state.message
   }
 }
 
@@ -68,7 +69,9 @@ function App(props) {
           </Col>
 
         </Row>
-        
+        <Row>
+          {props.message}
+        </Row>
       </Container>
       
     </div>
