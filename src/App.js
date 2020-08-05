@@ -46,32 +46,37 @@ function App(props) {
     <div className="App" style={bannerStyle()}>
       <Container>
         <Row d-flex="justify-content-center">
-          <Col xs={{span:10, offset:1}} sm={{span: 6, offset: 4}} md={{ span: 4, offset:3 }} d-flex="justify-content-center">
+          <Col xs={{span:12}} sm={{span: 8, offset: 4}} md={{ span: 5, offset:4 }} lg={{span: 4, offset: 4}} d-flex="justify-content-center">
               <Card>
+              <Card.Img src={require("./Images/elevator_wide.jpg")} />
+              <Card.ImgOverlay>
                 <Card.Body>
                   <Card.Title>
-                    Currrent Floor: {props.elevator.floor} {props.elevator.direction}
+                    <h3 className="text-danger">Currrent Floor: {props.elevator.floor} {props.elevator.direction}</h3>
                   </Card.Title>
-                 
-
                 </Card.Body>
-                <Card.Img variant="bottom" src={require("./Images/elevator_wide.jpg")}>
+                </Card.ImgOverlay>
+                
 
-                </Card.Img>
+                
                 <Card.Body>
                 <ListGroup className="list-group-flush">
                     <UserA />
                     <UserB />
                     <UserC />
                   </ListGroup>
+                  <Card.Text>
+                  <h2 className="text-danger">{props.message}</h2>
+                  </Card.Text>
                 </Card.Body>
+                
               </Card>
           </Col>
 
         </Row>
         <Row d-flex="justify-content-center">
           <Col xs={{span:10, offset:1}} sm={{span: 6, offset: 4}} md={{ span: 4, offset:3 }} d-flex="justify-content-center">
-          <h2 className="text-danger">{props.message}</h2>
+         
           </Col>
         </Row>
       </Container>
