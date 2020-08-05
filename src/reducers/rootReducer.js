@@ -25,25 +25,33 @@ const defaultState = {
         onelevator: false,
         waiting: false
     },
-    serviceQueue: []
+    serviceQueue: [],
+    currentUser: false
     
 }
 
 let bellSound = new Howl({
-    src: '../Sounds/elevator_bell.mp3'
-})
+    src: ['../Sounds/elevator_bell.mp3'],
+    volume: 0.8
+});
 
 let rideSound = new Howl({
-    src: '../Sounds/elevator_ride.mp3'
-})
-
-
+    src: ['../Sounds/elevator_ride.mp3']
+});
 
 const rootReducer = (state = defaultState, action) => {
     let { floor: elevatorFloor, direction: elevatorDirection, destination: elevatorDestination } = state.elevator
     let { floor: AFloor, destination: ADestination, onelevator: Aonelevator, waiting: Awaiting } = state.userA
     let { floor: BFloor, destination: BDestination, onelevator: Bonelevator, waiting: Bwaiting } = state.userB
     let { floor: CFloor, destination: CDestination, onelevator: Conelevator, waiting: Cwaiting } = state.userC
+    let user = state.currentUser
+    let queue = state.serviceQueue.slice(0)
+    if(!user){
+        if(queue.length > 0){
+            user = queue.pop()
+        }
+    }
+
     let newfloor
 
     switch(action.type) {
@@ -56,41 +64,118 @@ const rootReducer = (state = defaultState, action) => {
         BFloor = Bonelevator ? elevatorFloor : BFloor
         CFloor = Conelevator ? elevatorFloor : CFloor
         newfloor = gap > 0 ? elevatorFloor + 1 : gap < 0 ? elevatorFloor - 1 : elevatorFloor
-
-        if(!Aonelevator && Awaiting) {
+        function userAMove() {
+            if(!Aonelevator && Awaiting) {
                 if(AFloor !== elevatorFloor){
                     return {...state,
-                            elevator: {floor: newfloor, direction: newDirection, destination: AFloor }}
+                            elevator: {floor: newfloor, direction: newDirection, destination: AFloor },
+                            currentUser: user, serviceQueue: queue }
                 }
+                bellSound.play()
                 return {...state, 
                     userA: {...state.userA, onelevator: true, floor: elevatorFloor },
-                    elevator: {...state.elevator, destination: ADestination}}
+                    elevator: {...state.elevator, destination: ADestination},
+                    currentUser: user, serviceQueue: queue }
         }
         if(Aonelevator && Awaiting) { 
                 if(elevatorFloor === elevatorDestination){
+                bellSound.play()
                 return {...state,
                     userA: {...state.userA, onelevator: false, waiting: false, destination: ''},
-                    elevator: {...state.elevator, destination: false}}
+                    elevator: {...state.elevator, destination: false},
+                    currentUser: false, serviceQueue: queue }
             }
             return {...state, 
                     elevator: {...state.elevator, direction: newDirection, floor: newfloor },
-                    userA: {...state.userA, floor: newfloor }}
+                    userA: {...state.userA, floor: newfloor },
+                    currentUser: user, serviceQueue: queue }
         }
-        return {...state, elevator: {...state.elevator, direction: newDirection, floor: newfloor}}
+        }
+        function userBMove() {
+            if(!Bonelevator && Bwaiting) {
+                if(BFloor !== elevatorFloor){
+                    return {...state,
+                            elevator: {floor: newfloor, direction: newDirection, destination: BFloor },
+                            currentUser: user, serviceQueue: queue }
+                }
+                bellSound.play()
+                return {...state, 
+                    userB: {...state.userB, onelevator: true, floor: elevatorFloor },
+                    elevator: {...state.elevator, destination: BDestination},
+                    currentUser: user, serviceQueue: queue }
+        }
+        if(Bonelevator && Bwaiting) { 
+                if(elevatorFloor === elevatorDestination){
+                bellSound.play()
+                return {...state,
+                    userB: {...state.userB, onelevator: false, waiting: false, destination: ''},
+                    elevator: {...state.elevator, destination: false},
+                    currentUser: false, serviceQueue: queue }
+            }
+            return {...state, 
+                    elevator: {...state.elevator, direction: newDirection, floor: newfloor },
+                    userB: {...state.userB, floor: newfloor },
+                    currentUser: user, serviceQueue: queue }
+        }
+        }
+        function userCMove() {
+            if(!Conelevator && Cwaiting) {
+                if(CFloor !== elevatorFloor){
+                    return {...state,
+                            elevator: {floor: newfloor, direction: newDirection, destination: CFloor },
+                            currentUser: user, serviceQueue: queue }
+                }
+                bellSound.play()
+                return {...state, 
+                    userC: {...state.userC, onelevator: true, floor: elevatorFloor },
+                    elevator: {...state.elevator, destination: CDestination},
+                    currentUser: user, serviceQueue: queue }
+        }
+        if(Conelevator && Cwaiting) { 
+                if(elevatorFloor === elevatorDestination){
+                bellSound.play()
+                return {...state,
+                    userC: {...state.userC, onelevator: false, waiting: false, destination: ''},
+                    elevator: {...state.elevator, destination: false},
+                    currentUser: false, serviceQueue: queue }
+            }
+            return {...state, 
+                    elevator: {...state.elevator, direction: newDirection, floor: newfloor },
+                    userC: {...state.userC, floor: newfloor },
+                    currentUser: user, serviceQueue: queue }
+        }
+        }
+        if(user) {
+            if(user === 'userA'){
+                return userAMove()
+            }
+            if(user === 'userB'){
+                return userBMove()
+            }
+            if(user === 'userC'){
+                return userCMove()
+            }
+            
+        }
+        return {...state, elevator: {...state.elevator, direction: newDirection, floor: newfloor},
+               currentUser: user, serviceQueue: queue }
     
 
     case 'UpdateUserADestination':
         newfloor = parseInt(action.newfloor)
+        queue.unshift('userA')
         return {...state, userA: {...state.userA, destination: newfloor,waiting: true}, 
-               serviceQueue: state.serviceQueue.unshift('userA')}
+               serviceQueue: queue}
     case 'UpdateUserBDestination':
         newfloor = parseInt(action.newfloor)
+        queue.unshift('userB')
         return {...state, userB: {...state.userB, destination: newfloor,waiting: true },
-                serviceQueue: state.serviceQueue.unshift('userB')}
+                serviceQueue: queue}
     case 'UpdateUserCDestination':
         newfloor = parseInt(action.newfloor)
+        queue.unshift('userC')
         return {...state, userC: {...state.userC, destination: newfloor,waiting: true },
-                serviceQueue: state.serviceQueue.unshift('userC')}
+                serviceQueue: queue}
       default:
         return state
     }
