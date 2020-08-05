@@ -1,3 +1,5 @@
+import { Howl, Howler } from 'howler'
+
 const defaultState = {
     elevator: {
         floor: 6,
@@ -22,101 +24,165 @@ const defaultState = {
         destination: '',
         onelevator: false,
         waiting: false
-    }
+    },
+    serviceQueue: [],
+    currentUser: false,
+    message: "Welcome to the Elevator App. Pick a floor"
     
 }
+
+let bellSound = new Howl({
+    src: ['../Sounds/elevator_bell.mp3'],
+    volume: 0.8
+});
+
+let rideSound = new Howl({
+    src: ['../Sounds/elevator_ride.mp3']
+});
 
 const rootReducer = (state = defaultState, action) => {
     let { floor: elevatorFloor, direction: elevatorDirection, destination: elevatorDestination } = state.elevator
     let { floor: AFloor, destination: ADestination, onelevator: Aonelevator, waiting: Awaiting } = state.userA
     let { floor: BFloor, destination: BDestination, onelevator: Bonelevator, waiting: Bwaiting } = state.userB
     let { floor: CFloor, destination: CDestination, onelevator: Conelevator, waiting: Cwaiting } = state.userC
+    let user = state.currentUser
+    let queue = state.serviceQueue.slice(0)
+    if(!user){
+        if(queue.length > 0){
+            user = queue.pop()
+        }
+    }
+
     let newfloor
-    
-    /*
-    let [ Efloor, Afloor, AStatus, ADestination, 
-        APlace, Bfloor, BStatus, BDestination, 
-        Cfloor, CStatus, CDestination, direction, 
-        Nfloor, newfloor, EDestination ] = 
-        [ state.elevator.floor, state.userA.floor, state.userA.status, state.userA.destination,state.userA.place,
-      state.userB.floor, state.userB.status, state.userB.destination, state.userC.floor,
-      state.userC.status, state.userC.destination, state.elevator.direction, state.elevator.floor, null, state.elevator.destination ];
-            */
+
     switch(action.type) {
     case 'MoveElevatorFloor':
-        //case1: userA is getting on elevator to got to destination
-        //case2: userA is getting off elevator after arriviing at destination
-        //case3: userA is going nowhere
+        //use a queue to determine which user to service next
+
         const gap = elevatorDestination ? elevatorDestination - elevatorFloor : 0
         const newDirection = gap > 0 ? "U" : gap < 0 ? "D" : "N"
         AFloor = Aonelevator ? elevatorFloor : AFloor
         BFloor = Bonelevator ? elevatorFloor : BFloor
         CFloor = Conelevator ? elevatorFloor : CFloor
         newfloor = gap > 0 ? elevatorFloor + 1 : gap < 0 ? elevatorFloor - 1 : elevatorFloor
-
-        if(!Aonelevator && Awaiting) {
+        function userAMove() {
+            if(!Aonelevator && Awaiting) {
                 if(AFloor !== elevatorFloor){
                     return {...state,
-                            elevator: {floor: newfloor, direction: newDirection, destination: AFloor }}
+                            elevator: {floor: newfloor, direction: newDirection, destination: AFloor },
+                            currentUser: user, serviceQueue: queue }
                 }
+                bellSound.play()
                 return {...state, 
                     userA: {...state.userA, onelevator: true, floor: elevatorFloor },
-                    elevator: {...state.elevator, destination: ADestination}}
+                    elevator: {...state.elevator, destination: ADestination},
+                    currentUser: user, serviceQueue: queue,
+                    message: `User A is boarding the elevator at floor ${elevatorFloor}` }
         }
         if(Aonelevator && Awaiting) { 
                 if(elevatorFloor === elevatorDestination){
+                bellSound.play()
                 return {...state,
                     userA: {...state.userA, onelevator: false, waiting: false, destination: ''},
-                    elevator: {...state.elevator, destination: false}}
+                    elevator: {...state.elevator, destination: false},
+                    currentUser: false, serviceQueue: queue,
+                    message: `User A has reached the destinaton floor ${elevatorFloor}` }
             }
             return {...state, 
                     elevator: {...state.elevator, direction: newDirection, floor: newfloor },
-                    userA: {...state.userA, floor: newfloor }}
+                    userA: {...state.userA, floor: newfloor },
+                    currentUser: user, serviceQueue: queue }
         }
-        return {...state, elevator: {...state.elevator, direction: newDirection, floor: newfloor}}
+        }
+        function userBMove() {
+            if(!Bonelevator && Bwaiting) {
+                if(BFloor !== elevatorFloor){
+                    return {...state,
+                            elevator: {floor: newfloor, direction: newDirection, destination: BFloor },
+                            currentUser: user, serviceQueue: queue }
+                }
+                bellSound.play()
+                return {...state, 
+                    userB: {...state.userB, onelevator: true, floor: elevatorFloor },
+                    elevator: {...state.elevator, destination: BDestination},
+                    currentUser: user, serviceQueue: queue,
+                    message: `User B is boarding the elevator at floor ${elevatorFloor}` }
+        }
+        if(Bonelevator && Bwaiting) { 
+                if(elevatorFloor === elevatorDestination){
+                bellSound.play()
+                return {...state,
+                    userB: {...state.userB, onelevator: false, waiting: false, destination: ''},
+                    elevator: {...state.elevator, destination: false},
+                    currentUser: false, serviceQueue: queue,
+                    message: `User B reached the destination floor ${elevatorFloor}` }
+            }
+            return {...state, 
+                    elevator: {...state.elevator, direction: newDirection, floor: newfloor },
+                    userB: {...state.userB, floor: newfloor },
+                    currentUser: user, serviceQueue: queue }
+        }
+        }
+        function userCMove() {
+            if(!Conelevator && Cwaiting) {
+                if(CFloor !== elevatorFloor){
+                    return {...state,
+                            elevator: {floor: newfloor, direction: newDirection, destination: CFloor },
+                            currentUser: user, serviceQueue: queue }
+                }
+                bellSound.play()
+                return {...state, 
+                    userC: {...state.userC, onelevator: true, floor: elevatorFloor },
+                    elevator: {...state.elevator, destination: CDestination},
+                    currentUser: user, serviceQueue: queue,
+                    message: `User C is boarding the elevator at floor ${elevatorFloor}` }
+        }
+        if(Conelevator && Cwaiting) { 
+                if(elevatorFloor === elevatorDestination){
+                bellSound.play()
+                return {...state,
+                    userC: {...state.userC, onelevator: false, waiting: false, destination: ''},
+                    elevator: {...state.elevator, destination: false},
+                    currentUser: false, serviceQueue: queue,
+                    message: `User C has reached the destination ${elevatorFloor}` }
+            }
+            return {...state, 
+                    elevator: {...state.elevator, direction: newDirection, floor: newfloor },
+                    userC: {...state.userC, floor: newfloor },
+                    currentUser: user, serviceQueue: queue }
+        }
+        }
+        if(user) {
+            if(user === 'userA'){
+                return userAMove()
+            }
+            if(user === 'userB'){
+                return userBMove()
+            }
+            if(user === 'userC'){
+                return userCMove()
+            }
+            
+        }
+        return {...state, elevator: {...state.elevator, direction: newDirection, floor: newfloor},
+               currentUser: user, serviceQueue: queue }
     
 
     case 'UpdateUserADestination':
         newfloor = parseInt(action.newfloor)
-        return {...state, userA: {...state.userA, destination: newfloor,waiting: true}}
-
-        /*
-        if(AStatus === "OFF"){
-            //new elevator destination equals wherever 
-        }
-        
-        AStatus = Afloor === Efloor ? "ON": "OFF"
-        const levA = Efloor - newfloor
-        const dirA = levA > 0 ? "D" : levA < 0 ? "U" : "N"
-        return { ...state, 
-                userA: {...state.userA, destination: newfloor, 
-                        status: AStatus,place: 'AW'}, 
-                elevator: {...state.elevator, direction: dirA} }
-                */
+        queue.unshift('userA')
+        return {...state, userA: {...state.userA, destination: newfloor,waiting: true}, 
+               serviceQueue: queue}
     case 'UpdateUserBDestination':
         newfloor = parseInt(action.newfloor)
-        return {...state, userB: {...state.userB, destination: newfloor,waiting: true }}
-        /*
-        BStatus = Bfloor === Efloor ? "ON": "OFF"
-        const levB = Efloor - newfloor
-        const dirB = levB > 0 ? "D" : levB < 0 ? "U" : "N"
-        return { ...state, 
-                userB: {...state.userB, destination: newfloor,
-                status: BStatus, place: 'AW'}, 
-                elevator: {...state.elevator, direction: dirB} }
-                */
+        queue.unshift('userB')
+        return {...state, userB: {...state.userB, destination: newfloor,waiting: true },
+                serviceQueue: queue}
     case 'UpdateUserCDestination':
         newfloor = parseInt(action.newfloor)
-        return {...state, userC: {...state.userC, destination: newfloor,waiting: true }}
-        /*
-        CStatus = Cfloor === Efloor ? "ON": "OFF"
-        const levC = Efloor - newfloor
-        const dirC = levC > 0 ? "D" : levC < 0 ? "U" : "N"
-        return { ...state, 
-                userC: {...state.userC, destination: newfloor,
-                status: CStatus, place: 'AW'}, 
-                elevator: {...state.elevator, direction: dirC} }
-                */
+        queue.unshift('userC')
+        return {...state, userC: {...state.userC, destination: newfloor,waiting: true },
+                serviceQueue: queue}
       default:
         return state
     }

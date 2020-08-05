@@ -8,7 +8,8 @@ import { connect } from 'react-redux'
 
 const mapStateToProps = state => {
   return {
-    elevator: state.elevator
+    elevator: state.elevator,
+    message: state.message
   }
 }
 
@@ -68,7 +69,11 @@ function App(props) {
           </Col>
 
         </Row>
-        
+        <Row d-flex="justify-content-center">
+          <Col xs={{span:10, offset:1}} sm={{span: 6, offset: 4}} md={{ span: 4, offset:3 }} d-flex="justify-content-center">
+          <h2 className="text-danger">{props.message}</h2>
+          </Col>
+        </Row>
       </Container>
       
     </div>
