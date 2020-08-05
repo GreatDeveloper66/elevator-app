@@ -18,12 +18,15 @@ command line
 To launch app -> run 'npm start' in project directory 
 App will open at 'http://localhost:3000'
 visit 'http://localhost:3000' in your broswer or 
+
 #### Heroku 
 visit the heroku deployed app at https://serene-garden-70169.herokuapp.com/
 
 ### Usage
 
 Three users: UserA, UserB and UserC can ride the elevator. Set their destination floor by using the drop down and pressing the elevator button. The elevator will come to pick up the user and send them to their destination. The current floor of the elevator and the users as well as the elevator directions are displayed in the UI card.
+
+![App Snapshot](./src/Images/App_Capture.JPG)
 
 ### Contributing
 
